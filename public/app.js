@@ -1,4 +1,4 @@
-const API_URL = "https://63abc123.mockapi.io/api/v1/usuarios"; // Coloca tu URL real
+const API_URL = "/usuarios";  // La API está en el mismo dominio
 
 const form = document.getElementById('user-form');
 const nameInput = document.getElementById('name');
@@ -27,14 +27,17 @@ function displayUsers(users) {
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const newUser = {
-    name: nameInput.value,
-    email: emailInput.value
+    name: nameInput.value.trim(),
+    email: emailInput.value.trim()
   };
+  if (!newUser.name || !newUser.email) return alert("Completa ambos campos");
+
   await fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newUser)
   });
+
   nameInput.value = '';
   emailInput.value = '';
   fetchUsers();
@@ -45,9 +48,10 @@ async function deleteUser(id) {
   fetchUsers();
 }
 
-async function editUser(id, oldName, oldEmail) {
-  const name = prompt("Nuevo nombre:", oldName);
-  const email = prompt("Nuevo correo:", oldEmail);
+async function editUser(id, currentName, currentEmail) {
+  const name = prompt("Nuevo nombre:", currentName);
+  const email = prompt("Nuevo correo:", currentEmail);
+
   if (name && email) {
     await fetch(`${API_URL}/${id}`, {
       method: 'PUT',

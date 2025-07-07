@@ -36,3 +36,6 @@ app.delete('/usuarios/:id', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Servidor en puerto ${port}`));
+
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
