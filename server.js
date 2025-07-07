@@ -6,6 +6,11 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+let usuarios = [
+  { id: 1, name: 'Juan Pérez', email: 'juan@example.com' },
+  { id: 2, name: 'María Gómez', email: 'maria@example.com' }
+];
+
 app.get('/usuarios', (req, res) => res.json(usuarios));
 
 app.get('/usuarios/:id', (req, res) => {
